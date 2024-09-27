@@ -4,6 +4,8 @@
 #include "bx/engine/resource.hpp"
 #include "bx/engine/script.hpp"
 
+#include <bx/platform/window.hpp>
+
 #ifdef BX_EDITOR_BUILD
 #include <bx/editor/assets.hpp>
 #include <bx/editor/toolbar.hpp>
@@ -18,7 +20,6 @@
 #include <imgui_internal.h>
 #include <implot.h>
 #include <IconsFontAwesome5.h>
-#endif
 
 static void InitializeImGui()
 {
@@ -67,16 +68,17 @@ static void EngineMenuBar()
 
 	ImGui::ShowDemoWindow();
 }
+#endif
 
 bool Engine::Initialize()
 {
-	InitializeImGui();
-
 	Data::Initialize();
 	ResourceManager::Initialize();
 	Script::Initialize();
 
 #ifdef BX_EDITOR_BUILD
+	InitializeImGui();
+
 	AssetManager::Initialize();
 
 	ViewManager::AddMenuBarCallback(&EngineMenuBar);
