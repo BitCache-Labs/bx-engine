@@ -1,4 +1,4 @@
-#include "bx/engine/editor/assets.hpp"
+#include "bx/editor/assets.hpp"
 
 #include <bx/containers/hash_map.hpp>
 

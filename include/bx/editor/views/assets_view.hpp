@@ -1,6 +1,6 @@
 #pragma once
 
-#include "bx/engine/editor/assets.hpp"
+#include "bx/editor/assets.hpp"
 
 class AssetsView
 {

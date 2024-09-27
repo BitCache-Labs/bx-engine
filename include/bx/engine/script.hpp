@@ -2,7 +2,7 @@
 
 #include <bx/meta/meta.hpp>
 #include <bx/core/guard.hpp>
-#include <bx/core/type.hpp>
+#include <bx/meta/type.hpp>
 #include <bx/containers/string.hpp>
 #include <bx/containers/array.hpp>
 #include <bx/containers/list.hpp>

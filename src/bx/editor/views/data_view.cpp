@@ -1,4 +1,4 @@
-#include "bx/engine/editor/views/data_view.hpp"
+#include "bx/editor/views/data_view.hpp"
 
 #include "bx/engine/data.hpp"
 

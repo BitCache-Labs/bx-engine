@@ -14,6 +14,7 @@ set (BX_ENGINE_SRCS
 	"src/bx/engine/ecs.cpp"
 	"src/bx/engine/engine.cpp"
 	"src/bx/engine/resource.cpp"
+	"src/bx/engine/application.cpp"
 	"src/bx/engine/script.cpp"
 )
 
@@ -26,17 +27,17 @@ target_compile_definitions(bx-engine PRIVATE BX_ENGINE_PATH="${CMAKE_CURRENT_SOU
 # Editor sources and libraries
 if (BX_BUILD_EDITOR)
     target_sources(bx-engine PRIVATE
-		"src/bx/engine/editor/views/assets_view.cpp"
-		"src/bx/engine/editor/views/console_view.cpp"
-		"src/bx/engine/editor/views/data_view.cpp"
-		"src/bx/engine/editor/views/entity_view.cpp"
-		"src/bx/engine/editor/views/profiler_view.cpp"
-		"src/bx/engine/editor/views/script_view.cpp"
-		"src/bx/engine/editor/views/settings_view.cpp"
+		"src/bx/editor/views/assets_view.cpp"
+		"src/bx/editor/views/console_view.cpp"
+		"src/bx/editor/views/data_view.cpp"
+		"src/bx/editor/views/entity_view.cpp"
+		"src/bx/editor/views/profiler_view.cpp"
+		"src/bx/editor/views/script_view.cpp"
+		"src/bx/editor/views/settings_view.cpp"
 
-		"src/bx/engine/editor/assets.cpp"
-		"src/bx/engine/editor/asset_importer.cpp"
-		"src/bx/engine/editor/toolbar.cpp"
+		"src/bx/editor/assets.cpp"
+		"src/bx/editor/asset_importer.cpp"
+		"src/bx/editor/toolbar.cpp"
 	)
 	#target_link_libraries(bx-engine PRIVATE implot)
 endif()

@@ -2,7 +2,7 @@
 
 #include "bx/core/guard.hpp"
 #include "bx/core/macros.hpp"
-#include "bx/core/type.hpp"
+#include "bx/meta/type.hpp"
 #include "bx/containers/string.hpp"
 #include "bx/containers/list.hpp"
 #include "bx/containers/hash_map.hpp"

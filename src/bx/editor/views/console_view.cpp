@@ -1,4 +1,4 @@
-#include "bx/engine/editor/views/console_view.hpp"
+#include "bx/editor/views/console_view.hpp"
 
 #include <bx/core/macros.hpp>
 

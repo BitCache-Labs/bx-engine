@@ -1,23 +1,33 @@
-#include "bx/engine/editor/toolbar.hpp"
+#include "bx/editor/toolbar.hpp"
 
 #include "bx/engine/data.hpp"
 #include "bx/engine/script.hpp"
 
-#include <bx/core/runtime.hpp>
+#include <bx/core/application.hpp>
 #include <bx/core/time.hpp>
 #include <bx/core/version.hpp>
 #include <bx/platform/window.hpp>
 
-#define IMGUI_DEFINE_MATH_OPERATORS
-#include <imgui.h>
-#include <imgui_internal.h>
-#include <implot.h>
-#include <IconsFontAwesome5.h>
-
 #include <cstdlib>
 
-static List<View> g_views;
+bool Toolbar::Initialize()
+{
+	return true;
+}
 
+void Toolbar::Shutdown()
+{
+}
+
+void Toolbar::OnReload()
+{
+}
+
+void Toolbar::OnPresent()
+{
+}
+
+#ifdef OLD_TOOLBAR
 static bool playing = false;
 static bool paused = false;
 static float ui_scale = 1.0f;
@@ -84,11 +94,6 @@ bool Toolbar::ConsumeNextFrame()
 	return false;
 }
 
-void Toolbar::AddView(const View& view)
-{
-	g_views.emplace_back(view);
-}
-
 void Toolbar::Initialize()
 {
 	ui_scale = Data::GetFloat("Toolbar UI Scale", 1.0f, DataTarget::EDITOR);
@@ -105,28 +110,9 @@ void Toolbar::Initialize()
 
 	SelectTheme();
 
-	ImPlot::CreateContext();
-
-	ImGuiIO& io = ImGui::GetIO();
-
-	const float uiScale = 1.0f;
-	const float fontSize = 14.0f;
-	const float iconSize = 12.0f;
-
-	ImFontConfig config;
-	config.OversampleH = 8;
-	config.OversampleV = 8;
-	io.Fonts->AddFontFromFileTTF(FREE_FONTS_DROID_SANS, fontSize * uiScale, &config);
-
-	static const ImWchar icons_ranges[] = { ICON_MIN_FA, ICON_MAX_FA, 0 }; // will not be copied by AddFont* so keep in scope.
-	config.MergeMode = true;
-	config.OversampleH = 8;
-	config.OversampleV = 8;
-	io.Fonts->AddFontFromFileTTF(FONT_AWESOME_6_FREE_SOLID_900, iconSize * uiScale, &config, icons_ranges);
-
-	for (auto& view : g_views)
+	for (auto view : g_views)
 	{
-		if (!view.Initialize(view.isShown))
+		if (!view->Initialize())
 		{
 			BX_LOGE("Failed to initialize view!");
 			//return false;
@@ -140,7 +126,7 @@ void Toolbar::Shutdown()
 
 	for (auto& view : g_views)
 	{
-		view.Shutdown(view.isShown);
+		view->Shutdown();
 	}
 
 	Data::SetFloat("Toolbar UI Scale", ui_scale, DataTarget::EDITOR);
@@ -262,9 +248,9 @@ void Toolbar::Present()
 		ImGui::SameLine();
 		//ImGui::Separator();
 
-		for (auto& view : g_views)
+		for (auto view : g_views)
 		{
-			view.OnToolbar(view.isShown);
+			view->OnToolbar();
 		}
 
 		/*
@@ -336,17 +322,17 @@ void Toolbar::Present()
 		{
 			//const String& scene = Data::GetString("Current Scene", "", DataTarget::EDITOR);
 
-			Runtime::Reload();
+			Application::Reload();
 			//Scene::Load(scene);
 
-			for (const auto& view : g_views)
+			for (auto view : g_views)
 			{
-				view.OnReload();
+				view->OnReload();
 			}
 		}
 		Tooltip("Reload");
 
-		ImGui::SameLine();
+		/*ImGui::SameLine();
 		ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[playing ? ImGuiCol_ButtonHovered : ImGuiCol_Button]);
 		if (ImGui::Button(ICON_FA_PLAY))//playing ? ICON_FA_SQUARE : ICON_FA_PLAY))
 		{
@@ -357,12 +343,12 @@ void Toolbar::Present()
 
 				//const String& scene = Data::GetString("Current Scene", "", DataTarget::EDITOR);
 
-				Runtime::Reload();
+				Application::Reload();
 				//Scene::Load(scene);
 
 				for (const auto& view : g_views)
 				{
-					view.OnPlay();
+					//view.OnPlay();
 				}
 
 				Window::SetCursorMode(CursorMode::NORMAL);
@@ -372,9 +358,9 @@ void Toolbar::Present()
 				//const String& scene = Data::GetString("Current Scene", "", DataTarget::EDITOR);
 				//Scene::Save(scene);
 
-				for (const auto& view : g_views)
+				for (auto view : g_views)
 				{
-					view.OnStop();
+					//view->OnStop();
 				}
 
 				Window::SetCursorMode(CursorMode::DISABLED);
@@ -392,7 +378,7 @@ void Toolbar::Present()
 
 			for (const auto& view : g_views)
 			{
-				view.OnPause(paused);
+				//view.OnPause(paused);
 			}
 		}
 		ImGui::PopStyleColor();
@@ -406,6 +392,7 @@ void Toolbar::Present()
 
 		ImGui::SameLine();
 		//ImGui::Separator();
+		*/
 
 		ImGui::SameLine();
 		if (ok_timer > 0.0f)
@@ -469,13 +456,13 @@ void Toolbar::Present()
 		ImGuiID dockspaceId = ImGui::GetID("##DockSpaceID");
 		ImGui::DockSpace(dockspaceId, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None);
 
-		for (auto& view : g_views)
-		{
-			if (view.isShown)
-			{
-				view.OnGui(view.isShown);
-			}
-		}
+		//for (auto view : g_views)
+		//{
+		//	if (view->isShown)
+		//	{
+		//		view->OnGui();
+		//	}
+		//}
 
 		/*
 		if (show_data)
@@ -871,3 +858,4 @@ static ImGuiStyle PhotoshopStyle()
 
 	return style;
 }
+#endif

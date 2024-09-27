@@ -1,7 +1,7 @@
-#include "bx/engine/editor/views/assets_view.hpp"
+#include "bx/editor/views/assets_view.hpp"
 
 #include "bx/editor/selection.hpp"
-#include "bx/engine/editor/asset_importer.hpp"
+#include "bx/editor/asset_importer.hpp"
 
 #include <bx/core/macros.hpp>
 #include <bx/core/time.hpp>
@@ -24,6 +24,7 @@
 #include <misc/cpp/imgui_stdlib.h>
 #include <IconsFontAwesome5.h>
 
+#ifdef OLD_ASSETVIEW
 static List<AssetsView::Callback> g_callbacks;
 
 static TreeNodeId g_selectedFolder = INVALID_TREENODE_ID;
@@ -571,3 +572,4 @@ void AssetsView::Present(bool& show)
 
 	ImGui::End();
 }
+#endif

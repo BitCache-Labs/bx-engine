@@ -1,6 +1,6 @@
 #pragma once
 
-#include <bx/core/type.hpp>
+#include <bx/meta/enum.hpp>
 #include <bx/core/guard.hpp>
 #include <bx/containers/string.hpp>
 #include <bx/containers/list.hpp>

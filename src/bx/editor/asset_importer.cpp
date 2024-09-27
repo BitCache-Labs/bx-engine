@@ -1,4 +1,4 @@
-#include "bx/engine/editor/asset_importer.hpp"
+#include "bx/editor/asset_importer.hpp"
 
 #include <bx/containers/list.hpp>
 
